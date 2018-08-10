@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Drink</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/5.3.0/firebase.js"></script>
+</head>
+<body>
+  <div class="container-fluid py-4">
+    <div class="container">
+      <div class="jumbotron text-center mb-4">
+        <h1>App name</h1>
+      </div>
+      <div class="overlay">
+        <div class="popup text-center">
+          <p id="firstMessage">blabla</p>
+        </div>
+      </div>
+      <div class="welcome clearfix">
+        <form>
+          <div class="form-group">
+            <label for="name-input">Name</label>
+            <input type="text" id="userName" class="form-control form-control-sm" placeholder="name" required>
+          </div>
+          <div class="form-group">
+            <label for="weight-input">Weight (lbs.)</label>
+            <input type="text" id="weight" class="form-control form-control-sm" placeholder="180" required>
+          </div>
+          <div class="form-group">
+            <label for="phone-input">Sober Contact</label>
+            <input type="text" id="userPN" class="form-control form-control-sm" placeholder="9177326497" required>
+          </div>
+          <div class="form-group">
+            <label for="helpPN">Phone number</label>
+            <input type="text" id="helpPN" class="form-control form-control-sm" placeholder="9177326497" required>
+          </div>
+          <label for="sex">Sex</label>
+          <select class="form-control form-control-sm" id="gender">
+            <option>Male</option>
+            <option>Female</option>
+          </select>
+          <button type="button" class="btn btn-primary mt-3 float-right" id="submit">Submit</button>
+        </form>
+      </div>
+      <div id="drinksField" class="clearfix text-center">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <a class="nav-item nav-link active" id="nav-info-tab" data-toggle="tab" href="#drinksInfo" role="tab" aria-controls="nav-info" aria-selected="true">Info</a>
+            <a class="nav-item nav-link" id="nav-table-tab" data-toggle="tab" href="#drinksTable" role="tab" aria-controls="nav-table" aria-selected="false">Table</a>
+            <a class="nav-item nav-link" id="nav-map-tab" data-toggle="tab" href="#drinksMap" role="tab" aria-controls="nav-map" aria-selected="false">Map</a>
+          </div>
+        </nav>
+        <div class="tab-content" id="nav-tabContent">
+          <div class="tab-pane fade show active" id="drinksInfo" role="tabpanel" aria-labelledby="nav-info-tab">
+            <div class="my-3">
+              <p id="text">It will take: <strong><span id="showBac"></span></strong></p>
+              <div class="drinks flex justify-content-between">
+                <button type="button" name="button" class="btn" id="beer">Beer</button>
+                <button type="button" name="button" class="btn" id="wine">Wine</button>
+                <button type="button" name="button" class="btn" id="shot">Shot</button>
+                <button type="button" name="button" class="btn" id="cocktail">Cocktail</button>
+              </div>
+              <div id="bac" class="flex flex-column my-3">
+                <p>Current BAC level is</p>
+                <p id="bacLevel">0.0000</p>
+              </div>
+              <button type="button" class="btn float-right" id="deleteLS">Delete Data</button>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="drinksTable" role="tabpanel" aria-labelledby="nav-table-tab">
+            <div class="card my-3">
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th scope="col">Drink</th>
+                      <th scope="col">Number</th>
+                      <th scope="col">Last time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr id="beerRow"></tr>
+                    <tr id="wineRow"></tr>
+                    <tr id="shotRow"></tr>
+                    <tr id="cocktailRow"></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="drinksMap" role="tabpanel" aria-labelledby="nav-map-tab">
+            <div class="mapField my-3">
+              <div class="buttonsMap">
+                <button type="button"class="btn" name="button" id="atm">Atm</button>
+                <button type="button"class="btn" name="button" id="bar">Bar</button>
+                <button type="button"class="btn" name="button" id="liquor_store">Liquor Store</button>
+                <button type="button"class="btn" name="button" id="myLocation">My location</button>
+                <button type="button"class="btn" name="button" id="claerMap">Clear</button>
+              </div>
+              <div class="outerMap mt-3">
+                <div id="map"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/2.12.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  <script src="./assets/javascript/mapLogic.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=key&libraries=places&callback=initMap" async defer></script>
+  <script src="./assets/javascript/logic.js"></script>
+</body>
+</html>

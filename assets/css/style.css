@@ -1,0 +1,107 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url('../images/2ndpage.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  align-items: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.7);
+  transition: opacity 1s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.popup {
+  padding: .5rem;
+  width: 10rem;
+  position: absolute;
+  top: 15%;
+  right: calc(50% - 5rem);
+  /* transition: all 200ms; */
+}
+
+.popup,
+.welcome,
+#drinksField {
+  background-color: #fff;
+}
+
+.popup,
+.welcome,
+#bac,
+#drinksField,
+#map {
+  border-radius: 5px;
+}
+
+.welcome {
+  padding: 1.2rem;
+}
+
+.top {
+  margin: 1rem 0;
+}
+
+.outerMap {
+  width: 400px;
+  height: 400px;
+}
+
+.drinks,
+.outerMap {
+  width: 100%;
+}
+
+#map {
+  height: 100%;
+}
+
+#drinksField {
+  padding: 1rem;
+  background-color:
+}
+
+#bacLevel,
+#bac,
+.outerMap {
+  margin: 0 auto;
+}
+
+#bacLevel {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+#bac {
+  font-size: .75rem;
+  transition: background-color 1s linear;
+  background-color: rgba(60, 120, 5, 0.8);
+  width: 7rem;
+  height: 7rem;
+  align-items: center;
+}
+
+@media only screen and (max-width: 600px) {
+  .outerMap {
+    width: 320px;
+    height: 320px;
+  }
+}

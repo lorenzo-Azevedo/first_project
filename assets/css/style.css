@@ -148,9 +148,99 @@ label {
   align-items: center;
 }
 
-@media only screen and (max-width: 600px) {
+.btn {
+  background-color: #FC6F3A;
+  border-color: #FA6135;
+  color: white;
+}
+.btn:hover {
+  background-color: #5A5A8E;
+  border-color: #303352;
+  color: white;
+}
+
+.nav-item {
+  color: black;
+}
+
+.nav-item:hover {
+  background-color: #FDABAF;
+  color: white;
+}
+
+/* 
+#beer {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FA6135;
+}
+
+#cocktail {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FA6135;
+}
+
+#shot {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FA6135;
+}
+
+#wine {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #FA6135;
+}
+
+#beer:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #303352;
+}
+
+#cocktail:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #303352;
+}
+
+#wine:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #303352;
+}
+
+#shot:hover {
+  border-style: solid;
+  border-width: 1px;
+  border-color: #303352;
+} */
+
+@media only screen and (max-width: 766px) {
   .outerMap {
     width: 320px;
     height: 320px;
   }
+
+  #beer{
+    width: 50px;
+    height: 50px;
+  }
+  
+  #cocktail{
+    width: 50px;
+    height: 50px;
+  }
+  
+  #shot{
+    width: 50px;
+    height: 50px;
+  }
+  
+  #wine{
+    width: 50px;
+    height: 50px;
+  }
+
 }

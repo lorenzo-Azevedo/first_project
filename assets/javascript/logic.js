@@ -146,7 +146,7 @@ $(document).ready(function(){
           popupMessage('#firstMessage', 'BAC level is back to normal!');
           $('#text').text(`Hi ${userInfo.name}!`);
         } else {
-          $('#text').text(`It will take about ${(soberTime / 60).toFixed(0)} h ${soberTime % 60} min to sober up.`);
+          $('#text').text(`It will take about ${Math.floor(soberTime / 60)} h ${soberTime % 60} min to sober up.`);
         }
       }, 1000);
     }
@@ -181,7 +181,6 @@ $(document).ready(function(){
 
   $('#deleteLS').on('click', function(){
     localStorage.removeItem(namesLS.userName); //delete local storage and firebase set values to 0
-    // localStorage.removeItem(namesLS.sessionDrinks);
     clearInterval(timer);
     userInfo.status = 0;
     userInfo.currentBAC = 0;

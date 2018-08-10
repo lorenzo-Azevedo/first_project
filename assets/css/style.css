@@ -228,8 +228,8 @@ img:hover {
 
 @media only screen and (max-width: 766px) {
   .outerMap {
-    width: 320px;
-    height: 320px;
+    width: 275px;
+    height: 275px;
   }
 
   #beer{

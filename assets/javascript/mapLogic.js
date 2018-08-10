@@ -11,16 +11,16 @@ let icons = {
   bar: 'assets/images/mapIcons/bar.png'
 };
 
-function initMap() {
+function initMap() { //initialize the map
   map = new google.maps.Map(document.getElementById('map'), {
     // center: pyrmont,
     zoom: 12
   });
 
-  infowindow = new google.maps.InfoWindow();
-  service = new google.maps.places.PlacesService(map);
+  infowindow = new google.maps.InfoWindow(); //init new infoWindow class that dispalays info when you click marker
+  service = new google.maps.places.PlacesService(map);//init new places service class that contains methods related to searching for places
 
-  if (navigator.geolocation) {
+  if (navigator.geolocation) { //get location
 
     navigator.geolocation.getCurrentPosition(function(position) {
       pyrmont = {
@@ -28,9 +28,9 @@ function initMap() {
         lng: position.coords.longitude
       };
 
-      Object.assign(myLocation, pyrmont);
+      Object.assign(myLocation, pyrmont); //copy location to new obj
 
-      map.setCenter(pyrmont);
+      map.setCenter(pyrmont); //set map at the user location
       setUserMarker(pyrmont);
     }, function() {
       pyrmont = {};
@@ -41,7 +41,7 @@ function initMap() {
     });
   }
 
-  map.addListener('click', function(event) {
+  map.addListener('click', function(event) { //place user marker on clicked place
     pyrmont.lat = event.latLng.lat();
     pyrmont.lng = event.latLng.lng();
     userMarker.setPosition(pyrmont);
@@ -50,7 +50,7 @@ function initMap() {
   });
 };
 
-function setUserMarker(pos) {
+function setUserMarker(pos) { // create user marker
   if (userMarker != null) userMarker.setMap(null);
   userMarker = new google.maps.Marker({
     position: pos,
@@ -64,12 +64,12 @@ function setUserMarker(pos) {
 function callback(results, status) {
   if (status === google.maps.places.PlacesServiceStatus.OK) {
     for (let i = 0; i < results.length; i++) {
-      createMarker(results[i], feature);
+      createMarker(results[i], feature); //create markers around user marker by provided parameter
     }
   }
 }
 
-function createMarker(place, feature) {
+function createMarker(place, feature) { //create markers with provided icons
   placeLoc = place.geometry.location;
   marker = new google.maps.Marker({
     map: map,
@@ -79,7 +79,7 @@ function createMarker(place, feature) {
 
   markers.push(marker);
 
-  google.maps.event.addListener(marker, 'click', function() {
+  google.maps.event.addListener(marker, 'click', function() { //show info when marker clicked
     let status = '', rating = '';
     if(place.opening_hours === undefined) status = 'Nobody nows!';
     else if(place.opening_hours.open_now === true) status = 'Open!';
@@ -91,21 +91,21 @@ function createMarker(place, feature) {
   });
 }
 
-function setMapOnAll(map) {
+function setMapOnAll(map) { //place all markers on the emap
   for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
 }
 
-function clearMarkers() {
+function clearMarkers() { //set all markers to null
   setMapOnAll(null);
 };
 
-function showMarkers() {
+function showMarkers() { //set markers to the map
   setMapOnAll(map);
 };
 
-function nearby (feature, loc) {
+function nearby (feature, loc) { //search for services
   service.nearbySearch({
     location: loc,
     radius: 1000,
@@ -113,6 +113,7 @@ function nearby (feature, loc) {
   }, callback);
 };
 
+//program execution
 $(document).on('click', '#bar, #atm, #liquor_store, #myLocation', function(){
   feature = $(this).attr('id');
   if(feature != 'myLocation') {

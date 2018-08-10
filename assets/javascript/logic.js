@@ -5,12 +5,12 @@ $(document).ready(function(){
   let namesLS = {userName: 'userName', sessionDrinks: 'sessionDrinks'}; //names for ls
 
   let config = {
-    apiKey: "AIzaSyCFpQD6ZlX-nUF6f6kbwLNtecN7rSgnnjk",
-    authDomain: "learntochecktime.firebaseapp.com",
-    databaseURL: "https://learntochecktime.firebaseio.com",
-    projectId: "learntochecktime",
-    storageBucket: "learntochecktime.appspot.com",
-    messagingSenderId: "696422476059"
+    apiKey: "AIzaSyDS-NewoIULeVyym9H3FOog0uu6m7xTcqU",
+    authDomain: "firstprojectcolumbia.firebaseapp.com",
+    databaseURL: "https://firstprojectcolumbia.firebaseio.com",
+    projectId: "firstprojectcolumbia",
+    storageBucket: "firstprojectcolumbia.appspot.com",
+    messagingSenderId: "454697969249"
   };
 
   firebase.initializeApp(config);
@@ -60,20 +60,30 @@ $(document).ready(function(){
     });
   };
 
-  const validateInput = (name, weight) => {//validate user name and weigth, if correct return values, if not show message
-    let message = '';
+  const validateInput = (name, weight, helpNumber, userNumber) => {//validate user name and weigth, phone numbers, if correct return values, if not show message
+    let message = '', number = false;
     name = $('#userName').val().trim();
     weight = parseInt($('#weight').val().trim());
-    if(isNaN(weight) === false && name !== ''){
+    helpNumber = parseInt($('#helpPN').val().trim());
+    userNumber = parseInt($('#userPN').val().trim());
+
+    if (!isNaN(helpNumber) && !isNaN(userNumber)) {
+      if(helpNumber.toString().split('').length === 10 && userNumber.toString().split('').length === 10) {
+        number = true;
+        helpNumber = `+1${helpNumber}`;
+      } else message = 'Check the length of the pnone number. ';
+    } else message = 'Check phone number. ';
+
+    if(isNaN(weight) === false && name !== '' && number === true){
       itemToLS(namesLS.userName, name);
       $('.welcome').hide();
       $('#drinksField').show();
       $('#text').text(`Hi ${name}!`);
-      return [name, weight];
+      return [name, weight, helpNumber, userNumber];
     } else {
-      if(isNaN(weight) && name === '') message = 'Weight is not a number. Name is an empty string!';
-      else if (isNaN(weight)) message = 'Weight is not a number!';
-      else if( name === '') message = 'Name is an empty string!';
+      if(isNaN(weight) && name === '') message += 'Weight is not a number. Name is an empty string!';
+      else if (isNaN(weight)) message += 'Weight is not a number!';
+      else if( name === '') message += 'Name is an empty string!';
       popupMessage('#firstMessage', message);
       return false;
     }
@@ -130,7 +140,7 @@ $(document).ready(function(){
 
         if (bacLevel > 0.2 && sessionDrinks.messageSend !== true) {
           let messageTvilio = `The bac level of ${userInfo.name} is ${bacLevel.toFixed(3)}. You might need to contact the user by phone number ${userInfo.userPhoneNumber}! The latest ${userInfo.name}\'s location was ${myLocation.lat.toFixed(2)} latitude and ${myLocation.lng.toFixed(2)} longitude!`;
-          sendMessage('+19177326497', messageTvilio);
+          sendMessage(userInfo.helpPhoneNumber, messageTvilio);
           sessionDrinks.messageSend = true; //messages would not be sent in each interval, but just once
         } else if (bacLevel < 0.2) sessionDrinks.messageSend = false;
         itemToLS(namesLS.sessionDrinks, sessionDrinks);
@@ -169,10 +179,12 @@ $(document).ready(function(){
 
   $('#submit').on('click', function(event){
     event.preventDefault();
-    userInfo.name = validateInput(userInfo.name, userInfo.weight)[0];
-    userInfo.weight = validateInput(userInfo.name, userInfo.weight)[1];
-    userInfo.userPhoneNumber = $('#userPN').val().trim();
-    userInfo.helpPhoneNumber = $('#helpPN').val().trim();
+    userInfo.name = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[0];
+    userInfo.weight = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[1];
+    userInfo.userPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[2];
+    userInfo.helpPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[3];
+    // console.log(userInfo.helpPhoneNumber);
+    // console.log(userInfo.userPhoneNumber.toString().split('').length);
     userInfo.gValue = staticValues.gender[$('#gender').val().toLowerCase()];
     if (userInfo.name != null) updateUserInfo();
     $('input').val('');

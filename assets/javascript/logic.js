@@ -181,10 +181,8 @@ $(document).ready(function(){
     event.preventDefault();
     userInfo.name = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[0];
     userInfo.weight = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[1];
-    userInfo.userPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[2];
-    userInfo.helpPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[3];
-    // console.log(userInfo.helpPhoneNumber);
-    // console.log(userInfo.userPhoneNumber.toString().split('').length);
+    userInfo.helpPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[2];
+    userInfo.userPhoneNumber = validateInput(userInfo.name, userInfo.weight, userInfo.helpPhoneNumber, userInfo.userPhoneNumber)[3];
     userInfo.gValue = staticValues.gender[$('#gender').val().toLowerCase()];
     if (userInfo.name != null) updateUserInfo();
     $('input').val('');
